@@ -5,16 +5,14 @@ import ToggleAllButton from './toggleAllButton';
 function List() {
 
   let items = useSelector(state => state.todos.items)
+  
   const itemsCount = items.length;
 
   const activeFilter = useSelector(state => state.todos.activeFilter)
 
-  if (activeFilter !== "all") {
-    items = items.filter(item => activeFilter === "active"
-      ? item.completed === false
-      : item.completed === true
-    );
-  }
+  if (activeFilter !== "all")
+//  items = items.filter(item => activeFilter === "completed" ? item.completed : !item.completed);
+    items = items.filter(item => item.completed === (activeFilter === "completed"));
 
   return (
     <section className="main">

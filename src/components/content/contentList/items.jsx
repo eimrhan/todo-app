@@ -1,7 +1,6 @@
-import { toggleTodo, editTodo, deleteTodo } from '../../Redux/todos/todosSlice'
+import { toggleTodo, editTodo, deleteTodo } from '@/Redux/todos/todosSlice'
 import { useDispatch } from 'react-redux'
 import { useState } from "react"
-
 
 function Items({ item }) {
 
@@ -14,7 +13,7 @@ function Items({ item }) {
     e.preventDefault();
 
     if (editedText) {
-      dispatch(editTodo({id: item.id, title:editedText}))
+      dispatch(editTodo({ id: item.id, title: editedText }))
       setIsEditMode(false)
     }
   }
@@ -24,14 +23,20 @@ function Items({ item }) {
       <input className="toggle" type="checkbox" checked={item.completed}
         onChange={() => dispatch(toggleTodo(item.id))} />
 
-      {!isEditMode
-        ? 
-          <label onDoubleClick={() => setIsEditMode(true)}>{item.title}</label>
-        :
-          <form onSubmit={handleSubmit}>
-            <input className="edit-todo" value={editedText} onChange={(e) => { setEditedText(e.target.value) }} autoFocus/>
-          </form>
+      {
+        (() => {
+          if (!isEditMode)
+            return <label onDoubleClick={() => setIsEditMode(true)}>{item.title}</label>
+          else {
+            return (
+              <form onSubmit={handleSubmit}>
+                <input className="edit-todo" value={editedText} onChange={(e) => { setEditedText(e.target.value) }} autoFocus />
+              </form>
+            )
+          }
+        })()  // Immediately invoked function expressions (IIFEs)
       }
+
       <button className="destroy" onClick={() => dispatch(deleteTodo(item.id))} />
     </div>
   )

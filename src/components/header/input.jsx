@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useDispatch } from "react-redux";
-import { addTodo } from "../../Redux/todos/todosSlice";
+import { addTodo } from "@/Redux/todos/todosSlice";
 
 function Input() {
 

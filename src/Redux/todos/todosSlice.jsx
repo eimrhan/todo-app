@@ -40,20 +40,22 @@ export const todosSlice = createSlice({
         },
         editTodo: (state, action) => {
             state.items = state.items.map(item => {
-                if (item.id === action.payload.id) {
+                if (item.id === action.payload.id)
                     item.title = action.payload.title
-                }
                 return item;
             })
         },
         toggleTodo: (state, action) => {
-            const id = action.payload;
-            const item = state.items.find((item) => item.id === id)
-            item.completed = !item.completed
+            state.items = state.items.map(item => {
+                if (item.id === action.payload)
+                    item.completed = !item.completed
+                return item;
+            })
         },
-        toggleAll: (state) => {
-            state.items.map(item => item.completed = !state.toggleValue),
-                state.toggleValue = !state.toggleValue
+        toggleAll: (state, action) => {
+            state.toggleValue = action.payload;
+            state.items.map(item => item.completed = !state.toggleValue)
+            state.toggleValue = !state.toggleValue
         },
         clearCompleted: state => {
             const filtered = state.items.filter(item => item.completed === false)
@@ -71,7 +73,6 @@ export const { addTodo, deleteTodo, editTodo, toggleTodo, toggleAll, clearComple
 export const selectItemsLeft = state => {
     return state.todos.items.filter(item => item.completed === false).length;
 };
-
 export const selectItemsCompleted = state => {
     return state.todos.items.filter(item => item.completed === true).length;
 }

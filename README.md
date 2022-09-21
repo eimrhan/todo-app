@@ -1,7 +1,8 @@
 # To-Do App With React/Redux
 
 
-This project is based on [TodoMVC](http://todomvc.com)
+This project is based on [TodoMVC. No JS. At all!](https://codepen.io/dmitrysharabin/pen/MWgQNYZ) 
+and part of [TodoMVC](https://todomvc.com)
 
 Remade with React and Redux Toolkit.
 
@@ -14,7 +15,7 @@ Remade with React and Redux Toolkit.
 * Clear completed
 * Update
 * and Filter todos
-
+* it also show you different options according to todo counts.
 
 
 ## Tech Stack 

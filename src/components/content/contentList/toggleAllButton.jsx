@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { toggleAll, selectItemsLeft } from '../../Redux/todos/todosSlice';
+import { toggleAll, selectItemsLeft } from '@/Redux/todos/todosSlice';
 
 
 function ToggleAllButton() {
@@ -11,7 +11,7 @@ function ToggleAllButton() {
     return (
         <>
             <input className="toggle-all" type="checkbox" checked={itemsLeft === 0} readOnly/>
-            <label htmlFor="toggle-all" onClick={() => dispatch(toggleAll())}>
+            <label htmlFor="toggle-all" onClick={() => dispatch(toggleAll(itemsLeft === 0))}>
                 Mark all as complete
             </label>
         </>

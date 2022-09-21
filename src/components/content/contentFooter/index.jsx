@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux"
-import { changeFilter, selectItemsLeft } from "../../../Redux/todos/todosSlice"
+import { changeFilter, selectItemsLeft } from "@/Redux/todos/todosSlice"
 import ClearButton from "./clearButton";
 
 function ContentFooter() {
@@ -13,10 +13,9 @@ function ContentFooter() {
     return (
         <footer className="footer">
 
-            {/* This should be `0 items left` by default */}
             <span className="todo-count">
                 {itemsLeft === 0 ? "it's all done!" : 
-                <strong>{itemsLeft} item{itemsLeft > 1 && "s"} left</strong>}
+                <span>{itemsLeft} item{itemsLeft > 1 && "s"} left</span>}
             </span>
 
             <ul className="filters">
@@ -35,6 +34,10 @@ function ContentFooter() {
             </ul>
 
             <ClearButton />
+
+            <br/><br/>
+            <p>🖰 Double Click to edit Todo</p>
+
         </footer>
     )
 }
