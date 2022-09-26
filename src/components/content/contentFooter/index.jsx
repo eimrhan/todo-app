@@ -7,9 +7,12 @@ function ContentFooter() {
     const dispatch = useDispatch();
     
     const itemsLeft = useSelector(selectItemsLeft);
+    const activeFilter = useSelector(state => state.todos.activeFilter);
+    const getError = useSelector(state => state.todos.getError)
 
-    const activeFilter = useSelector(state => state.todos.activeFilter);    
-
+    if (getError)
+        return
+    
     return (
         <footer className="footer">
 

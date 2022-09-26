@@ -1,6 +1,6 @@
 import { useState } from "react"
-import { useDispatch } from "react-redux";
-import { addTodo } from "@/Redux/todos/todosSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { addTodoAsync } from "@/Redux/todos/todosSlice";
 
 function Input() {
 
@@ -8,20 +8,23 @@ function Input() {
 
     const [title, setTitle] = useState("");
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (title) {
-            dispatch(addTodo(title))
+            await dispatch(addTodoAsync({ title }))
             setTitle("")
         }
     }
 
+    const getError = useSelector(state => state.todos.getError)
+    const postError = useSelector(state => state.todos.postError)
+
     return (
         <>
             <form onSubmit={handleSubmit}>
-                <input className="new-todo" placeholder="What needs to be done?" autoFocus
-                    value={title} onChange={(e) => setTitle(e.target.value)} />
+                <input className={postError ? "postError" : "new-todo"} placeholder="What needs to be done?" autoFocus
+                    value={postError || title} disabled={postError || getError} onChange={(e) => setTitle(e.target.value)} />
             </form>
         </>
     )

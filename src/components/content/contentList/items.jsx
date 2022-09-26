@@ -1,4 +1,4 @@
-import { toggleTodo, editTodo, deleteTodo } from '@/Redux/todos/todosSlice'
+import { toggleTodo, editTodo, deleteTodoAsync } from '@/Redux/todos/todosSlice'
 import { useDispatch } from 'react-redux'
 import { useState } from "react"
 
@@ -37,7 +37,7 @@ function Items({ item }) {
         })()  // Immediately invoked function expressions (IIFEs)
       }
 
-      <button className="destroy" onClick={() => dispatch(deleteTodo(item.id))} />
+      <button className="destroy" onClick={async () => await dispatch(deleteTodoAsync(item.id))} />
     </div>
   )
 }
