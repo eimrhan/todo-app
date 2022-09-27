@@ -28,31 +28,29 @@ let todos = [
 app.get('/todos', (req, res) => res.send(todos));
 
 app.post('/todos', (req, res) => {
-  const todo = { title: req.body.title, id: nanoid(), completed: false };
+  const todo = {
+    title: req.body.title,
+    id: nanoid(),
+    completed: false
+  };
   todos.push(todo);
   return res.send(todo);
 });
 
-app.patch('/todos/:id', (req, res) => {
-  const id = req.params.id;
-  const index = todos.findIndex((todo) => todo.id == id);
-  const completed = Boolean(req.body.completed);
-  if (index > -1) {
-    todos[index].completed = completed;
-  }
-  return res.send(todos[index]);
+app.delete('/todos/:id', (req, res) => {
+  const index = todos.findIndex((todo) => todo.id == req.params.id);
+  if (index > -1)
+    todos.splice(index, 1);
+  res.send(todos);
 });
 
-app.delete('/todos/:id', (req, res) => {
-  const id = req.params.id;
-  const index = todos.findIndex((todo) => todo.id == id);
-  if (index > -1) {
-    todos.splice(index, 1);
-  }
-
-  res.send(todos);
+app.patch('/todos/:id', (req, res) => {
+  const index = todos.findIndex((todo) => todo.id == req.params.id);
+  if (index > -1)
+    todos[index].completed = Boolean(req.body.completed);
+  return res.send(todos[index]);
 });
 
 const PORT = 7000;
 
-app.listen(PORT, console.log(`Server running on port ${PORT}`.green.bold));
+app.listen(PORT, console.log(`Server running on port ${PORT}`.blue.bold));

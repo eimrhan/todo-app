@@ -1,21 +1,23 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from 'axios'
 
+const api_url = import.meta.env.VITE_APP_API_BASE_ENDPOINT + '/todos/'
+
 export const getTodosAsync = createAsyncThunk('todos/getTodosAsync', async () => {
-    return ((await axios('http://localhost:7000/todos')).data);
+    return ((await axios(api_url)).data);
 })
 
 export const addTodoAsync = createAsyncThunk('todos/addTodoAsync', async (data) => {
-    return ((await axios.post('http://localhost:7000/todos', data)).data)
+    return ((await axios.post(api_url, data)).data)
 })
 
 export const deleteTodoAsync = createAsyncThunk('todos/deleteTodoAsync', async (id) => {
-    await axios.delete(`http://localhost:7000/todos/${id}`)
+    await axios.delete(api_url+id)
     return id
 })
 
-export const toggleTodoAsync = createAsyncThunk('todos/toggleTodoAsync', async ({id, data}) => {
-    return ((await axios.patch(`http://localhost:7000/todos/${id}`, data)).data)
+export const toggleTodoAsync = createAsyncThunk('todos/toggleTodoAsync', async (data) => {
+    return ((await axios.patch(api_url+data.id, data)).data)
 })
 
 export const todosSlice = createSlice({
@@ -33,13 +35,6 @@ export const todosSlice = createSlice({
             state.items = state.items.map(item => {
                 if (item.id === action.payload.id)
                     item.title = action.payload.title
-                return item;
-            })
-        },
-        toggleTodo: (state, action) => {
-            state.items = state.items.map(item => {
-                if (item.id === action.payload)
-                    item.completed = !item.completed
                 return item;
             })
         },
@@ -78,13 +73,14 @@ export const todosSlice = createSlice({
             state.items.splice((state.items.findIndex((item) => item.id === action.payload)), 1)
         },
         [toggleTodoAsync.fulfilled]: (state, action) => {
-
+            const index = state.items.findIndex((item) => item.id === action.payload.id)
+            state.items[index].completed = action.payload.completed
         }
     }
 })
 
 export default todosSlice.reducer;
-export const { editTodo, toggleTodo, toggleAll, clearCompleted, changeFilter } = todosSlice.actions;
+export const { editTodo, toggleAll, clearCompleted, changeFilter } = todosSlice.actions;
 
 export const selectItemsLeft = state => {
     return state.todos.items.filter(item => item.completed === false).length;

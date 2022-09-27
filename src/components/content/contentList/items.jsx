@@ -1,4 +1,4 @@
-import { toggleTodo, editTodo, deleteTodoAsync } from '@/Redux/todos/todosSlice'
+import { toggleTodoAsync, editTodo, deleteTodoAsync } from '@/Redux/todos/todosSlice'
 import { useDispatch } from 'react-redux'
 import { useState } from "react"
 
@@ -21,7 +21,7 @@ function Items({ item }) {
   return (
     <div className="view">
       <input className="toggle" type="checkbox" checked={item.completed}
-        onChange={() => dispatch(toggleTodo(item.id))} />
+        onChange={async () => await dispatch(toggleTodoAsync({id: item.id, completed: !item.completed}))} />
 
       {
         (() => {
