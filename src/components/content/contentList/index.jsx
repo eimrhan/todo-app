@@ -23,8 +23,8 @@ function List() {
   const activeFilter = useSelector(state => state.todos.activeFilter)
 
   if (activeFilter !== "all")
-    //  items = items.filter(item => activeFilter === "completed" ? item.completed : !item.completed);
     items = items.filter(item => item.completed === (activeFilter === "completed"));
+//  items = items.filter(item => activeFilter === "completed" ? item.completed : !item.completed);
 
   if (isLoading)
     return <div className='loading'>Loading...</div>
