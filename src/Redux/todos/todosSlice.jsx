@@ -4,11 +4,11 @@ import axios from 'axios'
 const api_url = import.meta.env.VITE_APP_API_BASE_ENDPOINT + '/todos/'
 
 export const getTodosAsync = createAsyncThunk('todos/getTodosAsync', async () => {
-    return ((await axios(api_url)).data)    // ↳ action prefix'i (bu adresin yazım standardı budur.)
-}) // ↳ buradan return ettiğin veri action.payload'dur. extraReducerlar'da kullanılır.
+    return ((await axios(api_url)).data)
+})
 
 export const addTodoAsync = createAsyncThunk('todos/addTodoAsync', async (data) => {
-    return ((await axios.post(api_url, data)).data) // parametre olarak alınıp be'e gönderilen data ise be'de req.body altında çağrılır.
+    return ((await axios.post(api_url, data)).data)
 })
 
 export const deleteTodoAsync = createAsyncThunk('todos/deleteTodoAsync', async (id) => {
@@ -69,9 +69,6 @@ export const todosSlice = createSlice({
         },
         [clearCompletedAsync.fulfilled]: state => {
             state.items = state.items.filter(item => item.completed === false)
-            /* backend'den dönecek veriyi beklemek genelde daha maliyetli bir iştir.
-                bu yüzden önyüzde de gözükecek işlemi backendden çekmek yerine
-                önyüzde tekrar yapmak bazı durumlarda tercih edilebilir. */
         },
         [toggleTodoAsync.fulfilled]: (state, action) => {
             const index = state.items.findIndex((item) => item.id === action.payload.id)

@@ -30,18 +30,17 @@ app.get('/todos', (req, res) => res.send(todos));
 
 app.post('/todos', (req, res) => {
   const todo = {
-    title: req.body.title, // req.body ile data altında gönderdiğimiz verilere erişebiliriz.
+    title: req.body.title,
     id: nanoid(),
     completed: false
   };
   todos.push(todo);
-  res.status(201); // response çeşidine göre bir cevap dönebilirsin. eklemezsen varsayılan değer döner.
-  res.send(todo); // burada return yazmak zorunlu olmasa da kodun bittiğini belli edeceği için kullanmak istenebilir.
-}); // response dönmek zorundasın. res.send'den dönen sonuca göre browser işlemine devam eder
-    // bunun içinde döndüğün veri data'ya yazılır. kullanırken .data ile erişilebilir.
+  res.status(201);
+  res.send(todo);
+});
 
 app.delete('/todos/:id', (req, res) => {
-  const index = todos.findIndex((todo) => todo.id == req.params.id); // url'e bağlı gelen veri params olarak alınır
+  const index = todos.findIndex((todo) => todo.id == req.params.id);
   if (index > -1)
     todos.splice(index, 1);
   res.status(204);
@@ -60,8 +59,6 @@ app.patch('/todos/:id', (req, res) => {
     todos[index].completed = Boolean(req.body.completed);
   res.send(todos[index]);
 });
-// sadece tek bir item'ın tek alanı güncellenecekse patch kullanımı tercih edilebilir.
-// birden fazla item ve alan güncellemek gerekiyorsa bu durumda post tercih edilir.
 
 app.post('/todos/toggleAll', (req, res) => {
   toggleValue = Boolean(req.body.itemsLeft)
