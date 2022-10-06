@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux"
 import { changeFilter, selectItemsLeft } from "@/Redux/todos/todosSlice"
 import ClearButton from "./clearButton";
@@ -8,8 +9,12 @@ function ContentFooter() {
     
     const itemsLeft = useSelector(selectItemsLeft);
     const activeFilter = useSelector(state => state.todos.activeFilter);
-    const getError = useSelector(state => state.todos.getError)
 
+    useEffect(() => {
+        localStorage.setItem("activeFilter", activeFilter)
+    }, [activeFilter])
+
+    const getError = useSelector(state => state.todos.getError)
     if (getError)
         return
     

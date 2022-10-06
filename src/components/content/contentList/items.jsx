@@ -1,4 +1,4 @@
-import { toggleTodoAsync, editTodo, deleteTodoAsync } from '@/Redux/todos/todosSlice'
+import { toggleTodoAsync, editTodoAsync, deleteTodoAsync } from '@/Redux/todos/todosSlice'
 import { useDispatch } from 'react-redux'
 import { useState } from "react"
 
@@ -13,7 +13,7 @@ function Items({ item }) {
     e.preventDefault();
 
     if (editedText) {
-      dispatch(editTodo({ id: item.id, title: editedText }))
+      dispatch(editTodoAsync({ id: item.id, title: editedText }))
       setIsEditMode(false)
     }
   }

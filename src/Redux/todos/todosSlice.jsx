@@ -4,11 +4,11 @@ import axios from 'axios'
 const api_url = import.meta.env.VITE_APP_API_BASE_ENDPOINT + '/todos/'
 
 export const getTodosAsync = createAsyncThunk('todos/getTodosAsync', async () => {
-    return ((await axios(api_url)).data);
-})
+    return ((await axios(api_url)).data)    // ↳ action prefix'i (bu adresin yazım standardı budur.)
+}) // ↳ buradan return ettiğin veri action.payload'dur. extraReducerlar'da kullanılır.
 
 export const addTodoAsync = createAsyncThunk('todos/addTodoAsync', async (data) => {
-    return ((await axios.post(api_url, data)).data)
+    return ((await axios.post(api_url, data)).data) // parametre olarak alınıp be'e gönderilen data ise be'de req.body altında çağrılır.
 })
 
 export const deleteTodoAsync = createAsyncThunk('todos/deleteTodoAsync', async (id) => {
@@ -16,40 +16,35 @@ export const deleteTodoAsync = createAsyncThunk('todos/deleteTodoAsync', async (
     return id
 })
 
+export const clearCompletedAsync = createAsyncThunk('todos/clearCompletedAsync', async () => {
+    await axios.delete(api_url)
+})
+
 export const toggleTodoAsync = createAsyncThunk('todos/toggleTodoAsync', async (data) => {
     return ((await axios.patch(api_url+data.id, data)).data)
+})
+
+export const toggleAllAsync = createAsyncThunk('todos/toggleAllAsync', async (data) => {
+    return ((await axios.post((api_url + 'toggleAll'), data)).data)
+})
+
+export const editTodoAsync = createAsyncThunk('todos/editTodoAsync', async (data) => {
+    return ((await axios.post(api_url+data.id, data)).data)
 })
 
 export const todosSlice = createSlice({
     name: 'todos',
     initialState: {
         items: [],
-        activeFilter: "all",
-        toggleValue: false,
+        activeFilter: localStorage.getItem('activeFilter') || "all",
         isGetLoading: false,
         getError: null,
         postError: null,
     },
     reducers: {
-        editTodo: (state, action) => {
-            state.items = state.items.map(item => {
-                if (item.id === action.payload.id)
-                    item.title = action.payload.title
-                return item;
-            })
-        },
-        toggleAll: (state, action) => {
-            state.toggleValue = action.payload;
-            state.items.map(item => item.completed = !state.toggleValue)
-            state.toggleValue = !state.toggleValue
-        },
-        clearCompleted: state => {
-            const filtered = state.items.filter(item => item.completed === false)
-            state.items = filtered;
-        },
         changeFilter: (state, action) => {
             state.activeFilter = action.payload;
-        },
+        }
     },
     extraReducers: {
         [getTodosAsync.pending]: state => {
@@ -72,19 +67,31 @@ export const todosSlice = createSlice({
         [deleteTodoAsync.fulfilled]: (state, action) => {
             state.items.splice((state.items.findIndex((item) => item.id === action.payload)), 1)
         },
+        [clearCompletedAsync.fulfilled]: state => {
+            state.items = state.items.filter(item => item.completed === false)
+            /* backend'den dönecek veriyi beklemek genelde daha maliyetli bir iştir.
+                bu yüzden önyüzde de gözükecek işlemi backendden çekmek yerine
+                önyüzde tekrar yapmak bazı durumlarda tercih edilebilir. */
+        },
         [toggleTodoAsync.fulfilled]: (state, action) => {
             const index = state.items.findIndex((item) => item.id === action.payload.id)
             state.items[index].completed = action.payload.completed
+        },
+        [toggleAllAsync.fulfilled]: (state, action) => {
+            state.items.map(item => item.completed = action.payload)
+        },
+        [editTodoAsync.fulfilled]: (state, action) => {
+            state.items = action.payload
         }
     }
 })
 
 export default todosSlice.reducer;
-export const { editTodo, toggleAll, clearCompleted, changeFilter } = todosSlice.actions;
+export const { changeFilter } = todosSlice.actions;
 
 export const selectItemsLeft = state => {
     return state.todos.items.filter(item => item.completed === false).length;
-};
+}
 export const selectItemsCompleted = state => {
     return state.todos.items.filter(item => item.completed === true).length;
 }
