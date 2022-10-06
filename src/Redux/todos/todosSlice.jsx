@@ -71,7 +71,10 @@ export const todosSlice = createSlice({
             state.items = state.items.filter(item => item.completed === false)
             /* backend'den dönecek veriyi beklemek genelde daha maliyetli bir iştir.
                 bu yüzden önyüzde de gözükecek işlemi backendden çekmek yerine
-                önyüzde tekrar yapmak bazı durumlarda tercih edilebilir. */
+                önyüzde tekrar yapmak bazı durumlarda tercih edilebilir.
+                ama sonucu backendden dönmek daha sağlıklı bir işlemdir.
+                (veya backendden olumlu yanıt aldıktan sonta önyüzde yapmak)
+                (verinin tutarsızlığı durumu yaşamamak için) */
         },
         [toggleTodoAsync.fulfilled]: (state, action) => {
             const index = state.items.findIndex((item) => item.id === action.payload.id)

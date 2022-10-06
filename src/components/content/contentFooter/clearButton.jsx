@@ -5,9 +5,9 @@ function ClearButton() {
 
     const dispatch = useDispatch();
 
-    const handleClear = async () => {
+    const handleClear = () => {
         if (window.confirm("Are you sure to delete all completed tasks?"))
-            await dispatch(clearCompletedAsync())
+            dispatch(clearCompletedAsync())
     }
 
     const itemsCompleted = useSelector(selectItemsCompleted);
