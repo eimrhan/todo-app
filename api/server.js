@@ -68,10 +68,9 @@ app.post('/todos/toggleAll', (req, res) => {
 })
 
 app.post('/todos/:id', (req, res) => {
-  todos = todos.map(todo => {
+  todos.some(todo => {
     if (todo.id === req.body.id)
-      todo.title = req.body.title
-    return todo;
+      return todo.title = req.body.title
   })
   res.send(todos)
 })

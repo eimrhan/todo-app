@@ -4,16 +4,16 @@ import { useState } from "react"
 
 function Items({ item }) {
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const [isEditMode, setIsEditMode] = useState(false)
   const [editedText, setEditedText] = useState(item.title)
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault()
 
     if (editedText) {
-      dispatch(editTodoAsync({ id: item.id, title: editedText }))
+      await dispatch(editTodoAsync({ id: item.id, title: editedText }))
       setIsEditMode(false)
     }
   }
@@ -21,7 +21,7 @@ function Items({ item }) {
   return (
     <div className="view">
       <input className="toggle" type="checkbox" checked={item.completed}
-        onChange={async () => await dispatch(toggleTodoAsync({id: item.id, completed: !item.completed}))} />
+        onChange={() => dispatch(toggleTodoAsync({ id: item.id, completed: !item.completed }))} />
 
       {
         (() => {
@@ -37,7 +37,7 @@ function Items({ item }) {
         })()  // Immediately invoked function expressions (IIFEs)
       }
 
-      <button className="destroy" onClick={async () => await dispatch(deleteTodoAsync(item.id))} />
+      <button className="destroy" onClick={() => dispatch(deleteTodoAsync(item.id))} />
     </div>
   )
 }
