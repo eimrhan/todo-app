@@ -27,7 +27,7 @@ function ContentFooter() {
 	return (
 		<footer className="footer">
 
-			<span className="todo-count">{todoCount}</span>
+			<span className="todo-count">{todoCount()}</span>
 
 			<ul className="filters">
 				<li>

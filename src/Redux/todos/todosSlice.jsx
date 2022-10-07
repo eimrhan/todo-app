@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import axios from 'axios'
 
-const api_url = import.meta.env.VITE_APP_API_BASE_ENDPOINT + '/todos/'
+const api_url = import.meta.env.VITE_APP_API_BASE_ENDPOINT + '/todos/';
 
 export const getTodosAsync = createAsyncThunk('todos/getTodosAsync', async () => {
 	return ((await axios(api_url)).data)    // ↳ action prefix'i (bu adresin yazım standardı budur.)
