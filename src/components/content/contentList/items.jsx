@@ -4,13 +4,13 @@ import { useState } from "react"
 
 function Items({ item }) {
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const [isEditMode, setIsEditMode] = useState(false)
   const [editedText, setEditedText] = useState(item.title)
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
     if (editedText) {
       dispatch(editTodo({ id: item.id, title: editedText }))

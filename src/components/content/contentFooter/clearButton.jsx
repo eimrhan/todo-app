@@ -3,17 +3,16 @@ import { clearCompleted, selectItemsCompleted } from "@/Redux/todos/todosSlice"
 
 function ClearButton() {
 
-    const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
-    const handleClear = () => {
-        if (window.confirm("Are you sure to delete all completed tasks?")) {
-            dispatch(clearCompleted())
-        }
-    }
+  const handleClear = () => {
+    if (window.confirm("Are you sure to delete all completed tasks?"))
+      dispatch(clearCompleted())
+  }
 
-    const itemsCompleted = useSelector(selectItemsCompleted);
+  const itemsCompleted = useSelector(selectItemsCompleted)
 
-    return <button className="clear-completed" onClick={() => handleClear()} hidden={!itemsCompleted}>Clear completed</button>
+  return <button className="clear-completed" onClick={() => handleClear()} hidden={!itemsCompleted}>Clear Completed</button>
 }
 
 export default ClearButton

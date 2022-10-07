@@ -1,45 +1,48 @@
 import { useSelector, useDispatch } from "react-redux"
 import { changeFilter, selectItemsLeft } from "@/Redux/todos/todosSlice"
-import ClearButton from "./clearButton";
+import ClearButton from "./clearButton"
 
 function ContentFooter() {
 
-    const dispatch = useDispatch();
-    
-    const itemsLeft = useSelector(selectItemsLeft);
+  const dispatch = useDispatch()
 
-    const activeFilter = useSelector(state => state.todos.activeFilter);    
+  const itemsLeft = useSelector(selectItemsLeft)
+	const todoCount = () => {
+		if (itemsLeft === 0)
+			return "it's all done!"
+		else
+			return <span>{itemsLeft} item{itemsLeft > 1 && "s"} left</span>
+	}
 
-    return (
-        <footer className="footer">
+  const activeFilter = useSelector(state => state.todos.activeFilter)
 
-            <span className="todo-count">
-                {itemsLeft === 0 ? "it's all done!" : 
-                <span>{itemsLeft} item{itemsLeft > 1 && "s"} left</span>}
-            </span>
+  return (
+    <footer className="footer">
 
-            <ul className="filters">
-                <li>
-                    <a className={activeFilter == "all" ? "selected" : ""}
-                        onClick={() => dispatch(changeFilter("all"))}>All</a>
-                </li>
-                <li>
-                    <a className={activeFilter == "active" ? "selected" : ""}
-                        onClick={() => dispatch(changeFilter("active"))}>Active</a>
-                </li>
-                <li>
-                    <a className={activeFilter == "completed" ? "selected" : ""}
-                        onClick={() => dispatch(changeFilter("completed"))}>Completed</a>
-                </li>
-            </ul>
+      <span className="todo-count">{todoCount()}</span>
 
-            <ClearButton />
+      <ul className="filters">
+        <li>
+          <a className={activeFilter == "all" ? "selected" : ""}
+            onClick={() => dispatch(changeFilter("all"))}>All</a>
+        </li>
+        <li>
+          <a className={activeFilter == "active" ? "selected" : ""}
+            onClick={() => dispatch(changeFilter("active"))}>Active</a>
+        </li>
+        <li>
+          <a className={activeFilter == "completed" ? "selected" : ""}
+            onClick={() => dispatch(changeFilter("completed"))}>Completed</a>
+        </li>
+      </ul>
 
-            <br/><br/>
-            <p>🖰 Double Click to edit Todo</p>
+      <ClearButton />
 
-        </footer>
-    )
+      <br /><br />
+      <p>🖰 Double Click to edit Todo</p>
+
+    </footer>
+  )
 }
 
 export default ContentFooter
