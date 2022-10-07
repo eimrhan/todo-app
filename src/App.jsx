@@ -4,15 +4,15 @@ import Footer from "./components/footer"
 
 function App() {
 
-  return (
-    <>
-      <section className="todoapp">
-        <Header />
-        <Content />
-      </section>
-      <Footer />
-    </>
-  )
+	return (
+		<>
+			<section className="todoapp">
+				<Header />
+				<Content />
+			</section>
+			<Footer />
+		</>
+	)
 }
 
 export default App

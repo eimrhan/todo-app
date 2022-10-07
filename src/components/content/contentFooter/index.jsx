@@ -1,53 +1,56 @@
-import { useEffect } from "react";
+import { useEffect } from "react"
 import { useSelector, useDispatch } from "react-redux"
 import { changeFilter, selectItemsLeft } from "@/Redux/todos/todosSlice"
-import ClearButton from "./clearButton";
+import ClearButton from "./clearButton"
 
 function ContentFooter() {
 
-    const dispatch = useDispatch();
-    
-    const itemsLeft = useSelector(selectItemsLeft);
-    const activeFilter = useSelector(state => state.todos.activeFilter);
+	const dispatch = useDispatch()
 
-    useEffect(() => {
-        localStorage.setItem("activeFilter", activeFilter)
-    }, [activeFilter])
+	const itemsLeft = useSelector(selectItemsLeft)
+	const todoCount = () => {
+		if (itemsLeft === 0)
+			return "it's all done!"
+		else
+			return <span>{itemsLeft} item{itemsLeft > 1 && "s"} left</span>
+	}
 
-    const getError = useSelector(state => state.todos.getError)
-    if (getError)
-        return
-    
-    return (
-        <footer className="footer">
+	const activeFilter = useSelector(state => state.todos.activeFilter)
+	useEffect(() => {
+		localStorage.setItem("activeFilter", activeFilter)
+	}, [activeFilter])
 
-            <span className="todo-count">
-                {itemsLeft === 0 ? "it's all done!" : 
-                <span>{itemsLeft} item{itemsLeft > 1 && "s"} left</span>}
-            </span>
+	const getError = useSelector(state => state.todos.getError)
+	if (getError)
+		return
 
-            <ul className="filters">
-                <li>
-                    <a className={activeFilter == "all" ? "selected" : ""}
-                        onClick={() => dispatch(changeFilter("all"))}>All</a>
-                </li>
-                <li>
-                    <a className={activeFilter == "active" ? "selected" : ""}
-                        onClick={() => dispatch(changeFilter("active"))}>Active</a>
-                </li>
-                <li>
-                    <a className={activeFilter == "completed" ? "selected" : ""}
-                        onClick={() => dispatch(changeFilter("completed"))}>Completed</a>
-                </li>
-            </ul>
+	return (
+		<footer className="footer">
 
-            <ClearButton />
+			<span className="todo-count">{todoCount}</span>
 
-            <br/><br/>
-            <p>🖰 Double Click to edit Todo</p>
+			<ul className="filters">
+				<li>
+					<a className={activeFilter == "all" ? "selected" : ""}
+						onClick={() => dispatch(changeFilter("all"))}>All</a>
+				</li>
+				<li>
+					<a className={activeFilter == "active" ? "selected" : ""}
+						onClick={() => dispatch(changeFilter("active"))}>Active</a>
+				</li>
+				<li>
+					<a className={activeFilter == "completed" ? "selected" : ""}
+						onClick={() => dispatch(changeFilter("completed"))}>Completed</a>
+				</li>
+			</ul>
 
-        </footer>
-    )
+			<ClearButton />
+
+			<br /><br />
+			<p>🖰 Double Click to edit Todo</p>
+
+		</footer>
+	)
 }
 
 export default ContentFooter
