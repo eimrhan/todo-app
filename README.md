@@ -1,4 +1,4 @@
-# To-Do App With React/Redux
+# To-Do App With React/Redux + Express.js
 
 
 This project is based on [TodoMVC. No JS. At all!](https://codepen.io/dmitrysharabin/pen/MWgQNYZ) 
