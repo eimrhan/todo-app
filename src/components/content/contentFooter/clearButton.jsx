@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux"
-import { clearCompletedAsync, selectItemsCompleted, getTodosAsync } from "@/Redux/todos/todosSlice"
+import { clearCompletedAsync, selectItemsCompleted } from "@/Redux/todos/todosSlice"
 
 function ClearButton() {
 
