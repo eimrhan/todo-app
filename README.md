@@ -32,9 +32,8 @@ _(you can check this apps no back-end version on **todo-app-no-be** branch)_
  ![preview](./preview.jpg)
 
 
-> ## to test project without backend, go to: [To-do App no BE](https://todo-app-no-be.netlify.app) (Fastest preview) :sunglasses:
-
-> ## to test project with backend, go to: [To-do App with BE](https://todo-app-with-be.netlify.app) (Slow server) :yawning_face:
+- [x] to test project without backend, go to: [To-do App no BE](https://todo-app-no-be.netlify.app) (Fastest preview) :sunglasses:
+- [x] to test project with backend, go to: [To-do App with BE](https://todo-app-with-be.netlify.app) (Slow server) :yawning_face:
 
 ---
 ---
