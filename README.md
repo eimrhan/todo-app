@@ -31,9 +31,18 @@ _(you can check this apps no back-end version on **todo-app-no-be** branch)_
 ## Preview
  ![preview](./preview.jpg)
 
+
+> ## to test project without backend, go to: [To-do App no BE](https://todo-app-no-be.netlify.app) (Fastest preview) :sunglasses:
+
+> ## to test project with backend, go to: [To-do App with BE](https://todo-app-with-be.netlify.app) (Slow server) :yawning_face:
+
+---
 ---
 
-## Available Scripts
+# Test on Locale
+
+## **Available Scripts**
+
 ### Firstly, you must run **Back-End**;
 
 In the **api** directory:
